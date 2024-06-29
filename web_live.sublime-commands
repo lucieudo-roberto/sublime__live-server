@@ -1,0 +1,11 @@
+[
+    {
+        "caption":"web-live: start",
+        "command":"init_wlive"
+    },
+
+     {
+        "caption":"web-live: stop",
+        "command":"stop_wlive"
+    }
+]
