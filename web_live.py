@@ -3,7 +3,7 @@ import os
 import sublime_plugin as splg
 import sublime as subm
 
-sv_cf = subm.load_settings('wlive.sublime-settings')
+sv_cf = subm.load_settings('web_live.sublime-settings')
 os_sy = 1 if os.name == 'nt' else 2    # 1 is window,  2 is linux
 lv_pd = 0
 
