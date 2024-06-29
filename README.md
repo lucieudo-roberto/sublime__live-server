@@ -36,7 +36,7 @@ web-live é um plugin para o Sublime Text 3 que permite iniciar um servidor de d
 
 ## Configuração
 
-Edite o arquivo `wlive.sublime-settings` para personalizar as configurações do servidor:
+Edite o arquivo `web_live.sublime-settings` para personalizar as configurações do servidor:
 
 ```json
 {
