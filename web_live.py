@@ -33,6 +33,17 @@ class stop_wliveCommand(splg.TextCommand):
                 os.system('kill '+str(lv_pd))
                 self.view.erase_status('0x201512')   
                 lv_pd = 0
+            else:
+                subprocess.Popen("taskkill /t /f /pid "+str(lv_pd),shell=True)
+                self.view.erase_status('0x201512')
+                lv_pd = 0
+        if check_is_online():
+            #subm.message_dialog('Ops, please, stop process from takmanager, sorry') 
+            # the server not stoped
+            # Window, open taskmanager and stop node process
+            # Linux, use this command kill -9 $(lsof -t -i:<server-port>)
+            # self.view.erase_status('0x201512')
+            pass
             
 class init_wliveCommand(splg.TextCommand):
     def run(self, edit):
