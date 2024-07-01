@@ -23,7 +23,7 @@ def check_is_online():
         urllib.request.urlopen(''.join(url), timeout=5)
         return True
     except: 
-        return True
+        return False
 
 class stop_wliveCommand(splg.TextCommand):
     def run(self, edit):
@@ -38,7 +38,7 @@ class stop_wliveCommand(splg.TextCommand):
                 self.view.erase_status('0x201512')
                 lv_pd = 0
         if check_is_online():
-            #subm.message_dialog('Ops, please, stop process from takmanager, sorry') 
+            # subm.message_dialog('Ops, please, stop process from takmanager, sorry') 
             # the server not stoped
             # Window, open taskmanager and stop node process
             # Linux, use this command kill -9 $(lsof -t -i:<server-port>)
@@ -51,16 +51,29 @@ class init_wliveCommand(splg.TextCommand):
         if lv_pd == 0:
             if os_sy == 2: #is linux
                 command = [
-                    "live-server "
+                    "live-server ",
                     "--host="+str(sv_cf.get('host','127.0.0.1')),
                     "--port="+str(sv_cf.get('port','8080')),
                     "--cors",
                     "--quiet & echo $! > /tmp/pid_live_server"
                 ]
-
+                
                 os.system(" ".join(command))
                 with open('/tmp/pid_live_server', 'r') as file:
                     lv_pd = int(file.read())
                     self.view.set_status('0x201512',MSGS[0])            
             else:
-                pass
+                fd_root = subm.active_window().folders()[0]
+                command = [
+                    "cd "+str(fd_root)+" & "+"live-server",
+                    "--host="+str(sv_cf.get('host','127.0.0.1')),
+                    "--port="+str(sv_cf.get('port','8080')),
+                    "--cors",
+                    "--quiet"
+                ]
+
+                _proc = subprocess.Popen(' '.join(command),shell=True)
+                lv_pd = _proc.pid
+
+                if check_is_online():
+                    self.view.set_status('0x201512',MSGS[0])
